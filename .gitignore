@@ -1,0 +1,17 @@
+node_modules
+.env
+.env.testing
+
+coverage
+coverage.json
+typechain
+typechain-types
+*.out
+bin/
+.idea
+*.exe
+*.exe~
+*.so
+*.dylib
+*.pem
+/dist

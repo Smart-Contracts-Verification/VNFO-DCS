@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sample Title</title>
+        <link rel = "stylesheet" href = "./test-main.css">
+        <script type="module" src="./node_modules/web3/dist/web3.min.js"></script>
+        <script type="module"  src = "./JScode/fetchbtn.js"></script>
+        <script type="module"  src = "./JScode/createbtn.js"></script>
+        <script type="module"  src = "./JScode/scalebtn.js"></script>
+        <script type="module"  src = "./JScode/deletebtn.js"></script>
+        <script  type="module"  src = "./JScode/eventUser.js"></script>
+        <script  type="module"  src = "./JScode/Unregistration_user_btn.js"></script>
+        <script  type="module"  src = "./JScode/getVNFBCbtn.js"></script>
+        <script  type="module"  src = "./JScode/getResourcesbtn.js"></script>
+        <script>
+        async function displayID(){
+            const accounts= await ethereum.request({ method: 'eth_requestAccounts' });
+           
+            document.getElementById('showAccount').innerHTML += accounts[0] || 'Not able to get accounts';
+            //document.getElementById('createid').disabled = true;
+        }
+        async function test(){
+            
+            
+                const res = await fetch('http://127.0.0.1:3000/events', {
+                    method: 'GET',
+                    mode: 'cors',
+                    headers: {
+                    'Content-Type': 'application/json',
+                     },
+                    //body: JSON.stringify(data)
+                    }).then((resp) =>{console.log(resp) ;return resp.json(); })
+                    .then(async (data) =>   {
+                        
+                        
+                       // var chars = JSON.stringify(data.events.events.split("},"));
+                       // document.getElementById("EventLog").innerHTML = chars;
+
+                       let text = "";
+                                    for (var x in data.events.events) {
+                                    text += JSON.stringify(data.events.events[x],["resource_id","resource_type","resource_state", "timestamp"]);
+                                   
+                                    }
+                                    document.getElementById("EventLog").innerHTML =text.split(' "} ') + '\n';
+                        //document.getElementById("EventLog").innerHTML = JSON.stringify(data.events.events ,["resource_id","resource_type","resource_state","event_type", "timestamp"], 10);
+                    
+                    
+                    })
+    
+            //////////
+        }
+        </script>
+    </head>
+
+    <body  onload="displayID(this);setInterval(function(){test(this)},30000);">
+        <h1> VNFO-DCSC: Secure NFV Marketplace using Dynamic Composite Smart Contracts</h1>
+        
+       
+        <button onclick= "window.location.href='http://127.0.0.1:3000/login.html';" >Back</button>
+        <div class = "parent">
+            
+            <div class = "child1">
+                <h2>NFV Lifecycle</h2>
+                
+            <div>
+                <button id="getvnfbtn">Get VNF Details</button>
+                <p id = "vnfdetail" style = "font-weight: bold;"></p>
+
+            </div>
+            <div>
+                <button id="getRbtn">Get Resources</button>
+                <p id = "resources" style = "font-weight: bold;"></p>
+
+            </div>
+                
+                <div class = "parent">
+                    <div class = "child1">
+                        <p id = "left">Fetch VNF: </p>
+                    <!--</div>
+                    <div class = "child1">-->
+                        <form name="fetch" id= "fetch" onsubmit="return false;">
+                            <div>
+                                <label>CPU (Number of cores): </label>
+                                <input id = "cpu" name = "cpu" type = "number" value = "1">
+                            </div>
+                            <div>
+                                <label>Memory (Mb): </label>
+                                <input id = "memory" name = "memory" type = "number" value = "1">
+                            </div>
+                            <div>
+                                <label>Storage (Gb): </label>
+                                <input id = "storage" name = "storage" type = "number" value = "1">
+                            </div>
+                            <div>
+                                <input id = "fetchid" type = "submit" value = "confirm">
+                                
+                            </div>
+                        </form>
+                    </div>
+                <!--</div>
+                <div class = "parent">-->
+                    <div class = "child1">
+                        <p id = "left">Create VNF: </p>
+                    <!--</div>
+
+                    <div class = "child1">-->
+                        <form name="create" id= "create" onsubmit="return false;">
+                            <div>
+                                <label>CPU (Number of cores): </label>
+                                <input id = "cpu" name = "cpu" type = "number" value = "1">
+                            </div>
+                            <div>
+                                <label>Memory (Mb): </label>
+                                <input id = "memory" name = "memory" type = "number" value = "1">
+                            </div>
+                            <div>
+                                <label>Storage (Gb): </label>
+                                <input id = "storage" name = "storage" type = "number" value = "1">
+                            </div>
+                           
+                            <div>
+                                <input id = "createid" type = "submit" value = "create VNF">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class = "parent">
+                    <div class = "child1">
+                        <p class = "left">Scale out VNF: </p>
+                        <form name="scale" id= "scale" onsubmit="return false;">
+                            <div>
+                                <label>VNFID: </label>
+                                <input id = "vnfid" name = "vnfid">
+                            </div>
+                            
+                            <div>
+                                <label>CPU (Number of cores): </label>
+                                <input id = "cpu" name = "cpu" type = "number" value = "1">
+                            </div>
+                            <div>
+                                <label>Memory (Mb): </label>
+                                <input id = "memory" name = "memory" type = "number" value = "1">
+                            </div>
+                            <div>
+                                <label>Storage (Gb): </label>
+                                <input id = "storage" name = "storage" type = "number" value = "1">
+                            </div>
+                            <div>
+                                <input id = "scaleid" type = "submit" value = "confirm">
+                            </div>
+                        </form>
+                    </div>
+                <!--</div>
+                <div class = "parent">-->
+                    <div class = "child1">
+                        <p id = "left">Delete VNF: </p>
+                   <!-- </div>
+                    <div class = "child1">-->
+                        <form name = "delete" onsubmit="return false;">
+                            <div>
+                                <!--<label for = "vnfid_toDelete">VNFID: </label>
+                                <select id = "vnfid_toDelete" name = "vnfid_toDelete">
+                                
+                                </select>-->
+                                <label for = "vnfid_toDelete">VNFID: </label>
+                                <input id = "vnfid_toDelete" name = "vnfid_toDelete">
+                            </div>
+                            <div>
+                                <input id = "deleteid" type = "submit" value = "confirm">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class = "child1" style = "display: flex; flex-direction: column;">
+                <div class = "test">
+                    <p id ='showAccount'>Current Address: </p>
+                    <p id ='UserID' >User ID: </p>
+                    <p id ='UserAddress' >User Address: </p>
+                    
+                    <button id="unregisterUser">Unregister</button>
+                </div>
+                <!--<div id = "login">
+
+                   
+
+                   
+                    <button class="enableEthereumButton">connect metamask</button>
+                    <button id="btn1">register</button>
+                    <button id="btn2">unregister</button>
+                    <p >Account: <span class="showAccount"></span> </p>
+                 
+                    
+                </div>-->
+                <p id = "BlockchainEventTitle" style = "font-weight: bold;">Blockchain Events</p>
+                <!--<div style="height:200px;width:200px;border:1px;font:16px/26px Georgia, Garamond, Serif;overflow:auto;">-->
+                <div id = "BlockchainEvents" style="height:200px;width:700px;border:1px;font:14px/26px Georgia, Garamond, Serif;overflow:auto;">
+                
+                </div>
+               
+                <p id = "OpenStackEventTitle" style = "font-weight: bold;">Open Stack Events</p>
+                <!--<div style="height:200px;width:200px;border:1px;font:16px/26px Georgia, Garamond, Serif;overflow:auto;">-->
+                <div id = "OpenstackEvents" style="height:200px;width:700px;border:1px;font:12px/26px Georgia, Garamond, Serif;overflow:auto;">
+
+                </div>
+                
+            </div>
+        </div>
+        <p id = "EventLogTitle" style = "font-weight: bold;">Event log</p>
+                <!--<div style="height:200px;width:200px;border:1px;font:16px/26px Georgia, Garamond, Serif;overflow:auto;">-->
+                <div id = "EventLog" style="height:200px;border:1px;font:20px/26px Georgia, Garamond, Serif;overflow:auto;">
+                
+                </div>
+
+                
+    </body>
+</html>
