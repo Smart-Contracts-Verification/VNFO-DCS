@@ -13,7 +13,7 @@ cp .env-sample .env
 ```
 2. Fill the .env config file with the proper variables:
  ```bash
-# Polygon Veriables
+# openstack Veriables
 openstack_url=<your_server_ip>
 
 ```
