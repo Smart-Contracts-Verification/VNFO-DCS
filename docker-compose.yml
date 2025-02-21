@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  backend:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - ./.env  
+    working_dir: /backend
+    environment:
+      VIRTUAL_HOST: vnfo.localhost
+    networks:
+      proxy:
+
+networks:
+  proxy:
+    external: true
